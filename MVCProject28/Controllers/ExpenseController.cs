@@ -1,0 +1,41 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using MVCProject28.Data;
+using MVCProject28.Models;
+using System.Collections.Generic;
+
+namespace MVCProject28.Controllers
+{
+    public class ExpenseController : Controller
+    {
+        private readonly ApplicationDbContext _db;
+        public ExpenseController(ApplicationDbContext db)
+        {
+            _db = db; //LOCAL DATABASE
+        }
+        public IActionResult Index()
+        {
+            IEnumerable<Expense> objList = _db.Expenses;
+            return View(objList); //Pass this object list to directly view                                                                                         //RETRIVE ITEMS FROM DATABASE
+
+        }
+        //GET-CREATE
+        public IActionResult Create()
+        {
+
+            return View();
+        }
+        //POST-CREATE
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Expense obj)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Expenses.Add(obj);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(obj);
+        }
+    }
+}
