@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MVCProject28.Models
 {
@@ -14,5 +15,10 @@ namespace MVCProject28.Models
         [Required]
         [Range(1,int.MaxValue, ErrorMessage ="Amount Must Be Greater Than 0!")]
         public int Amount { get; set; }
+        [DisplayName("Expense Type")]
+        public int ExpenseTypeId { get; set; }
+        [ForeignKey("ExpenseTypeId")]
+        public virtual ExpenseType ExpenseType { get; set; }
+
     }
 }

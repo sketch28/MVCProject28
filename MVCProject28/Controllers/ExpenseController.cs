@@ -31,6 +31,7 @@ namespace MVCProject28.Controllers
         {
             if (ModelState.IsValid)
             {
+                obj.ExpenseTypeId = 1;
                 _db.Expenses.Add(obj);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
